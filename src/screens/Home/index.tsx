@@ -8,12 +8,13 @@ import { FilledList } from "../../components/FilledList";
 export const Home = () => {
   const [tasks, setTasks] = useState([])
   const [input, setInput] = useState('')
-  const [counter, setCounter] = useState(0)
+  const [counterCreated, setCounterCreated] = useState(0)
+  const [counterFinished, setCounterFinished] = useState(0)
 
   const handleAddTask = () => {
     setTasks((prevState) => [...prevState, input]);
     setInput('');
-    setCounter(tasks.length + 1)
+    setCounterCreated(tasks.length + 1)
   }
 
   return (
@@ -40,20 +41,22 @@ export const Home = () => {
           <View style={styles.createdWrapper}>
             <Text style={styles.createdText}>Criadas</Text>
             <View style={styles.counter}>
-              <Text style={{ color: '#fff', fontWeight: 'bold'}}>{counter}</Text>
+              <Text style={{ color: '#fff', fontWeight: 'bold'}}>{counterCreated}</Text>
             </View>
           </View>
           <View style={styles.finishedWrapper}>
             <Text style={styles.finishedText}>Concluídas</Text>
             <View style={styles.counter}>
-              <Text style={{ color: '#fff', fontWeight: 'bold'}}>0</Text>
+              <Text style={{ color: '#fff', fontWeight: 'bold'}}>{counterFinished}</Text>
             </View>
           </View>
         </View>        
           {
             !tasks.length ?
             <EmptyList /> :
-            <FilledList tasks={tasks}/>
+            <FilledList
+              tasks={tasks}
+              setCounterFinished={setCounterFinished}/>
           }
       </KeyboardAvoidingView>
     </>
