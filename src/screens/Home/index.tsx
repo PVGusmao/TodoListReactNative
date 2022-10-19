@@ -56,6 +56,7 @@ export const Home = () => {
             <EmptyList /> :
             <FilledList
               tasks={tasks}
+              setTasks={setTasks}
               setCounterFinished={setCounterFinished}/>
           }
       </KeyboardAvoidingView>

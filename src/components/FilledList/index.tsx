@@ -3,7 +3,7 @@ import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { styles } from './style';
 import { Feather , Entypo } from '@expo/vector-icons'; 
 
-export function FilledList({ tasks, setCounterFinished }: any) {
+export function FilledList({ tasks, setCounterFinished, setTasks }: any) {
   const [markedTask, setMarkedTask] = useState(false)
 
   return (
@@ -15,12 +15,11 @@ export function FilledList({ tasks, setCounterFinished }: any) {
       }}
     >
       {
-          tasks.map((element: string) => (
+          (tasks).map((element: string) => (
             <View key={element} style={styles.filledWrapper}>
-              <TouchableOpacity onPress={(event) => {
-                console.log(event.target)
+              <TouchableOpacity onPress={() => {
                 setMarkedTask(!markedTask)
-                markedTask ? setCounterFinished(prevState => prevState - 1) : setCounterFinished(prevState => prevState + 1)
+                markedTask ? setCounterFinished((prevState: number) => prevState - 1) : setCounterFinished((prevState: number) => prevState + 1)
               }}>
                 {
                   markedTask ? <Feather name="check-circle" size={24} color='#1E6F9F' /> : <Entypo name="circle" size={24} color='#1E6F9F' />
@@ -29,9 +28,13 @@ export function FilledList({ tasks, setCounterFinished }: any) {
             <View style={styles.textWrapper}>
               <Text style={styles.textTask}>{element}</Text>
             </View>
-            <View>
+            <TouchableOpacity onPress={(e) => {
+              const aloneElement = tasks.find((element: string) => element)
+              const newArray = tasks.filter((element: string) => element !== aloneElement)
+              setTasks(newArray)
+            }}>
               <Feather name="trash-2" size={20} color="#fff" />
-            </View>
+            </TouchableOpacity>
           </View>
           ))
         }
