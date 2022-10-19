@@ -17,8 +17,14 @@ export const styles = StyleSheet.create({
   textTask: {
     color: '#fff',
     fontStyle: 'normal',
-    fontWeight: 'bold',
     fontSize: 14,
     textAlign: 'justify',
   },
+  finished: {
+    color: '#fff',
+    fontStyle: 'normal',
+    fontSize: 14,
+    textAlign: 'justify',
+    textDecorationLine: 'line-through',
+  }
 })

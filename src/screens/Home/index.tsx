@@ -6,14 +6,18 @@ import { EmptyList } from "../../components/EmptyList";
 import { FilledList } from "../../components/FilledList";
 
 export const Home = () => {
-  const [tasks, setTasks] = useState([])
-  const [input, setInput] = useState('')
+  const [tasks, setTasks]: any = useState([])
+  const [taskss, setTaskss]: any = useState([])
+  const [input, setInput]: any = useState({
+    value: '',
+    finished: false,
+  })
   const [counterCreated, setCounterCreated] = useState(0)
   const [counterFinished, setCounterFinished] = useState(0)
 
   const handleAddTask = () => {
-    setTasks((prevState) => [...prevState, input]);
-    setInput('');
+    setTasks((prev: any) => [...prev, input]);
+    setInput({ ...input, value: ''});
     setCounterCreated(tasks.length + 1)
   }
 
@@ -30,8 +34,8 @@ export const Home = () => {
             placeholder="Adicione uma nova tarefa"
             placeholderTextColor={'gray'}
             style={styles.inputTask}
-            onChangeText={text => setInput(text)}
-            value={input}
+            onChangeText={text => setInput({...input, value: text})}
+            value={input.value}
           />
           <TouchableOpacity onPress={() => handleAddTask()}style={styles.inputButton}>
             <AntDesign name="pluscircleo" size={24} color="white" />
@@ -57,7 +61,9 @@ export const Home = () => {
             <FilledList
               tasks={tasks}
               setTasks={setTasks}
-              setCounterFinished={setCounterFinished}/>
+              setCounterFinished={setCounterFinished}
+              counterCreated={counterCreated}
+              setCounterCreated={setCounterCreated}/>
           }
       </KeyboardAvoidingView>
     </>

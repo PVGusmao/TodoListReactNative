@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { styles } from './style';
 import { Feather , Entypo } from '@expo/vector-icons'; 
 
-export function FilledList({ tasks, setCounterFinished, setTasks }: any) {
-  const [markedTask, setMarkedTask] = useState(false)
+export function FilledList({ tasks, setCounterFinished, setTasks, setCounterCreated, counterCreated }: any) {
 
   return (
     <ScrollView
@@ -15,23 +14,24 @@ export function FilledList({ tasks, setCounterFinished, setTasks }: any) {
       }}
     >
       {
-          (tasks).map((element: string) => (
-            <View key={element} style={styles.filledWrapper}>
+          (tasks).map((element: any, index: number) => (
+            <View key={index} style={styles.filledWrapper}>
               <TouchableOpacity onPress={() => {
-                setMarkedTask(!markedTask)
-                markedTask ? setCounterFinished((prevState: number) => prevState - 1) : setCounterFinished((prevState: number) => prevState + 1)
+                element.finished = !element.finished;
+                !element.finished ? setCounterFinished((prevState: number) => prevState - 1) : setCounterFinished((prevState: number) => prevState + 1)
               }}>
                 {
-                  markedTask ? <Feather name="check-circle" size={24} color='#1E6F9F' /> : <Entypo name="circle" size={24} color='#1E6F9F' />
+                  element.finished ? <Feather name="check-circle" size={24} color='#1E6F9F' /> : <Entypo name="circle" size={24} color='#1E6F9F' />
                 }
               </TouchableOpacity>
             <View style={styles.textWrapper}>
-              <Text style={styles.textTask}>{element}</Text>
+              <Text style={element.finished ? styles.finished : styles.textTask}>{element.value}</Text>
             </View>
-            <TouchableOpacity onPress={(e) => {
+            <TouchableOpacity onPress={() => {
               const aloneElement = tasks.find((element: string) => element)
               const newArray = tasks.filter((element: string) => element !== aloneElement)
-              setTasks(newArray)
+              setTasks(newArray);
+              setCounterCreated(counterCreated - 1)
             }}>
               <Feather name="trash-2" size={20} color="#fff" />
             </TouchableOpacity>
